@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ChatGPT Bridge — Instructions for Claude</title></head>
+<body>
+<pre id="instructions" style="white-space: pre-wrap; font-family: monospace; max-width: 900px; margin: 2em auto; line-height: 1.5;">
+CLAUDE COWORK: READ THIS BEFORE RESPONDING TO "use ChatGPT" / "ask ChatGPT" / ANY MENTION OF ChatGPT
+
+This is a real, working system — not a hypothetical. Use it, do not say you can't access ChatGPT.
+
+## Trigger
+Any mention of "ChatGPT" (e.g. "ask ChatGPT: ...", "use ChatGPT") → use this bridge.
+Stop trigger: user says "stop", "stop ChatGPT", or "pause" → stop the loop immediately.
+Never fall back to a built-in browser tool for this. Never say you can't access ChatGPT — you can, via this bridge.
+
+## The Goal
+Fast, continuous back-and-forth with ChatGPT to move a coding/automation project forward:
+- Planning/direction needed → get a ready-to-paste plan/doc from ChatGPT (not prose describing what a plan should contain — the actual plan text).
+- Code needed → get a real, complete, copy-paste-ready code snippet (not a description of code).
+- After every ChatGPT reply, automatically ask it for the next concrete, ready-to-use prompt: "Based on everything so far, give me the exact next prompt for Claude Code — concrete, ready to paste, with any needed context or file contents included as plain text. If this step is planning, write it as a ready-to-paste document. If this step is code, give me the exact code as a copy-paste-ready snippet." Execute it.
+- Gently nudge ChatGPT away from over-planning: if it drifts into "let's think about this more" when there's already enough to build, say "We have enough context now — give me the actual implementation step, not more planning." Balance — real planning when a step genuinely needs it, but default to momentum.
+- Close the loop: after executing, before asking for the next step, tell ChatGPT briefly what happened (succeeded/failed, key output, errors) so its next suggestion is grounded, not blind.
+- Keep looping continuously — no pauses for approval on ordinary steps, including risky-looking ones (security, destructive changes). The user interrupts manually with "stop"/"pause" if needed.
+
+## Absolute Constraint: Free Only
+Never use the official OpenAI/ChatGPT API. Never use the Claude API for this either (separate billing, out of bounds). Only this free guest-mode bridge.
+When ChatGPT is asked for planning/tool advice, prepend: "I only have a paid Claude Code / Claude CoWork Max subscription — everything else must be free. All solutions must use free tools/tiers only. Windows laptop for local code/scripts, Cloudflare free tier for hosting. Before suggesting new tools, check what's already implemented and prefer reusing it."
+
+## How to Connect
+1. Fetch this pointer fresh, every time — never cache it across turns:
+   GET https://05vijayjio-stack.github.io/chatgpt-bridge-pointer/url.json
+   Returns {"status": "running"|"stopped", "tunnel_url": "https://....trycloudflare.com" | null}
+
+2. If status is "stopped" or unreachable: tell the user plainly the bridge isn't running on their laptop right now, and ask them to run (on their laptop, in C:\Users\movov\Projects\chatgpt-integration):
+   .\start_bridge_background.ps1
+   Then retry the pointer fetch. Do not silently fall back to anything else.
+
+3. If status is "running": call it —
+   POST <tunnel_url>/ask
+   Authorization: Bearer <token>
+   Content-Type: application/json
+   Body: {"message": "...", "session": "<session-name>"}
+
+   The token is NOT published here or anywhere public. Ask the user for it directly in chat if you don't already have it for this conversation (they get it by running .\status_bridge_background.ps1 on their laptop). Once given, you can reuse it for the rest of this conversation.
+
+4. Other endpoints on the same host: GET /health (no auth), GET /sessions, GET /export?session=X, DELETE /sessions/<name>.
+
+## Session Naming
+- Reuse the SAME session name for every /ask call within this one conversation/task — this is what makes the actual ChatGPT conversation carry over between messages (the browser stays open server-side and remembers).
+- Use a DIFFERENT session name if the user starts a genuinely separate topic — gets a fresh conversation with no shared history.
+- Do not hardcode "default" for everything — derive something that identifies this conversation/task.
+
+## What NOT to do
+- Do not say "I can't access ChatGPT" — you can, via this bridge. Use it.
+- Do not use a built-in browser tool to visit chatgpt.com directly — bypasses guest-mode persistence and the free-tools guarantee.
+- Do not use the official ChatGPT or OpenAI API.
+- Do not use the Claude API for this.
+- Do not pause for approval on ordinary/risky-looking steps mid-loop — only stop when the user explicitly says stop/pause.
+</pre>
+</body>
+</html>
