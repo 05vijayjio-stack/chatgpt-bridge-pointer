@@ -1,0 +1,6 @@
+{
+  "tunnel_url": null,
+  "status": "not started",
+  "updated_at": null,
+  "note": "This file only contains the current Cloudflare quick-tunnel URL. It never contains the auth token. Fetch this to discover the live bridge address, then call it with the token given to you separately."
+}
