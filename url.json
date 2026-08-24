@@ -1,6 +1,6 @@
 {
-    "status":  "stopped",
-    "tunnel_url":  null,
+    "status":  "running",
+    "tunnel_url":  "https://drawings-peripherals-davis-range.trycloudflare.com",
     "note":  "This file only contains the current Cloudflare quick-tunnel URL. It never contains the auth token.",
-    "updated_at":  "2026-08-23T23:40:58.1966251-04:00"
+    "updated_at":  "2026-08-23T23:41:20.5743157-04:00"
 }
