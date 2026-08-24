@@ -1,6 +1,6 @@
 {
-    "status":  "running",
-    "tunnel_url":  "https://geology-spin-orders-converted.trycloudflare.com",
+    "status":  "stopped",
+    "tunnel_url":  null,
     "note":  "This file only contains the current Cloudflare quick-tunnel URL. It never contains the auth token.",
-    "updated_at":  "2026-08-23T23:47:17.9514997-04:00"
+    "updated_at":  "2026-08-23T23:54:32.8183025-04:00"
 }
