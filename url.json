@@ -1,6 +1,6 @@
 {
     "status":  "running",
-    "tunnel_url":  "https://doe-fleet-theater-zope.trycloudflare.com",
+    "tunnel_url":  "https://edited-machine-banana-todd.trycloudflare.com",
     "note":  "This file only contains the current Cloudflare quick-tunnel URL. It never contains the auth token.",
-    "updated_at":  "2026-08-24T12:10:10.8529817-04:00"
+    "updated_at":  "2026-08-26T07:56:37.4844077-04:00"
 }
